@@ -1,8 +1,9 @@
 ﻿/*
 Created: 21.04.2021
-Modified: 27.04.2021
+Modified: 29.04.2021
 Project: Baza Komunikacji Miejskiej
 Company: Politechnika Warszawska
+Author: Mariusz Nieciecki, Marta Kot
 Database: Oracle 12c
 */
 
@@ -33,10 +34,10 @@ CREATE TABLE Pracownicy(
 CREATE INDEX IX_Zatrudnia ON Pracownicy (ID_biura)
 /
 
-CREATE INDEX IX_Relationship4 ON Pracownicy (ID_adresu)
+CREATE INDEX IX_Pracownik_ma_adres ON Pracownicy (ID_adresu)
 /
 
-CREATE INDEX Pracownik_ma_stanowisko ON Pracownicy (ID_stanowiska)
+CREATE INDEX IX_Pracownik_ma_stanowisko ON Pracownicy (ID_stanowiska)
 /
 
 -- Add keys for table Pracownicy
@@ -121,10 +122,10 @@ CREATE TABLE Bilety(
 
 -- Create indexes for table Bilety
 
-CREATE INDEX IX_Jest w posiadaniu ON Bilety (Id_Klienta)
+CREATE INDEX IX_Jest_w_posiadaniu ON Bilety (Id_Klienta)
 /
 
-CREATE INDEX IX_Biuro obsluguje bilety ON Bilety (ID_biura)
+CREATE INDEX IX_Biuro_obsluguje_bilety ON Bilety (ID_biura)
 /
 
 -- Add keys for table Bilety
@@ -159,10 +160,10 @@ CREATE TABLE Klienci(
 
 -- Create indexes for table Klienci
 
-CREATE INDEX IX_Relationship2 ON Klienci (ID_ulgi)
+CREATE INDEX IX_Klient_posiada ON Klienci (ID_ulgi)
 /
 
-CREATE INDEX IX_Relationship7 ON Klienci (ID_adresu)
+CREATE INDEX IX_Klient_mandat ON Klienci (ID_adresu)
 /
 
 -- Add keys for table Klienci
@@ -201,7 +202,7 @@ CREATE TABLE Pojazdy(
 
 -- Create indexes for table Pojazdy
 
-CREATE INDEX IX_Biuro posiada dany pojazd ON Pojazdy (ID_biura)
+CREATE INDEX IX_Biuro_posiada_dany_pojazd ON Pojazdy (ID_biura)
 /
 
 -- Add keys for table Pojazdy
@@ -234,22 +235,22 @@ CREATE TABLE Kursy(
   ID_pojazdu Integer NOT NULL,
   ID_pracownika Integer NOT NULL,
   ID_biura Integer NOT NULL,
-  Id_trasy Integer NOT NULL
+  ID_trasy Integer
 )
 /
 
 -- Create indexes for table Kursy
 
-CREATE INDEX IX_Pojazd kursuje ON Kursy (ID_pojazdu)
+CREATE INDEX IX_Pojazd_kursuje ON Kursy (ID_pojazdu)
 /
 
-CREATE INDEX IX_Pracownik prowadzi kurs ON Kursy (ID_pracownika)
+CREATE INDEX IX_Pracownik_prowadzi_kurs ON Kursy (ID_pracownika)
 /
 
 CREATE INDEX IX_Obsluguje ON Kursy (ID_biura)
 /
 
-CREATE INDEX IX_Relationship5 ON Kursy (Id_trasy)
+CREATE INDEX IX_Kurs_odbywa_sie_na_trasie ON Kursy (ID_trasy)
 /
 
 -- Add keys for table Kursy
@@ -270,8 +271,6 @@ COMMENT ON COLUMN Kursy.ID_pojazdu IS 'Identyfikator pojazdu FK'
 COMMENT ON COLUMN Kursy.ID_pracownika IS 'Identyfikator pracownika FK'
 /
 COMMENT ON COLUMN Kursy.ID_biura IS 'Identyfikator biura FK'
-/
-COMMENT ON COLUMN Kursy.Id_trasy IS 'Identyfikator trasy FK'
 /
 
 -- Table Przystanki
@@ -328,8 +327,7 @@ COMMENT ON COLUMN Kierowcy.Data_waznosci_badan IS 'Data ważności badań lekars
 
 CREATE TABLE Kontrolerzy(
   ID_pracownika Integer NOT NULL,
-  Nr_urzadzenia Varchar2(30 ) NOT NULL,
-  Premia Number(10,2)
+  Nr_urzadzenia Varchar2(30 ) NOT NULL
 )
 /
 
@@ -343,8 +341,6 @@ ALTER TABLE Kontrolerzy ADD CONSTRAINT Unique_Identifier2 PRIMARY KEY (ID_pracow
 COMMENT ON COLUMN Kontrolerzy.ID_pracownika IS 'Identyfikator pracownika PFK'
 /
 COMMENT ON COLUMN Kontrolerzy.Nr_urzadzenia IS 'Numer urządzenia obsługwanego przez pracownika'
-/
-COMMENT ON COLUMN Kontrolerzy.Premia IS 'Premia dla kontrolera'
 /
 
 -- Table Mandaty
@@ -457,7 +453,7 @@ CREATE TABLE Adresy(
 
 -- Create indexes for table Adresy
 
-CREATE INDEX IX_Relationship3 ON Adresy (ID_poczty)
+CREATE INDEX IX_Adres_ma_poczte ON Adresy (ID_poczty)
 /
 
 -- Add keys for table Adresy
@@ -552,7 +548,7 @@ CREATE TABLE Prawa_jazdy(
 
 -- Create indexes for table Prawa_jazdy
 
-CREATE INDEX IX_Relationship6 ON Prawa_jazdy (ID_pracownika)
+CREATE INDEX IX_Kierowca_prawo_jazdy ON Prawa_jazdy (ID_pracownika)
 /
 
 -- Add keys for table Prawa_jazdy
@@ -591,7 +587,7 @@ CREATE TABLE Wynagrodzenia(
 
 -- Create indexes for table Wynagrodzenia
 
-CREATE INDEX IX_Relationship1 ON Wynagrodzenia (ID_pracownika)
+CREATE INDEX IX_Otrzymuje_wynagrodzenie ON Wynagrodzenia (ID_pracownika)
 /
 
 -- Add keys for table Wynagrodzenia
@@ -615,7 +611,7 @@ COMMENT ON COLUMN Wynagrodzenia.ID_pracownika IS 'Identyfikator pracownika FK'
 -- Table Trasy_przystanki
 
 CREATE TABLE Trasy_przystanki(
-  Id_trasy Integer NOT NULL,
+  ID_trasy Integer NOT NULL,
   ID_przystanku Integer NOT NULL,
   Kolejnosc Integer NOT NULL
 )
@@ -623,12 +619,12 @@ CREATE TABLE Trasy_przystanki(
 
 -- Add keys for table Trasy_przystanki
 
-ALTER TABLE Trasy_przystanki ADD CONSTRAINT PK_Trasy_przystanki PRIMARY KEY (Id_trasy,ID_przystanku)
+ALTER TABLE Trasy_przystanki ADD CONSTRAINT PK_Trasy_przystanki PRIMARY KEY (ID_przystanku,ID_trasy)
 /
 
 -- Table and Columns comments section
 
-COMMENT ON COLUMN Trasy_przystanki.Id_trasy IS 'Identyfikator trasy PFK'
+COMMENT ON COLUMN Trasy_przystanki.ID_trasy IS 'Identyfikator trasy'
 /
 COMMENT ON COLUMN Trasy_przystanki.ID_przystanku IS 'Identyfikator przystanku PFK'
 /
@@ -718,12 +714,12 @@ ALTER TABLE Wynagrodzenia ADD FOREIGN KEY (ID_pracownika) REFERENCES Pracownicy 
 
 
 
-ALTER TABLE Kursy ADD FOREIGN KEY (Id_trasy) REFERENCES Trasy (ID_trasy)
+ALTER TABLE Kursy ADD FOREIGN KEY (ID_trasy) REFERENCES Trasy (ID_trasy)
 /
 
 
 
-ALTER TABLE Trasy_przystanki ADD FOREIGN KEY (Id_trasy) REFERENCES Trasy (ID_trasy)
+ALTER TABLE Trasy_przystanki ADD FOREIGN KEY (ID_trasy) REFERENCES Trasy (ID_trasy)
 /
 
 
