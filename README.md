@@ -26,4 +26,15 @@ Część I projektu obejmuje realizację:
 - kwestia strojenia bazy (zagadnienie stosowania indeksów), 
 - projekt transakcji i weryfikacja ich wykonalności.
 
+
+Część II projektu obejmuje realizację:
+
+**Aplikacji**
+- Aplikacja powinna być napisana z użyciem technologii Java w architekturze 
+wielowarstwowej (cienki klient w postaci przeglądarki internetowej). Przy przygotowaniu 
+rozwiązania dopuszcza się możliwość korzystania z różnego rodzaju frameworków
+programistycznych, które mogą usprawnić proces przygotowania aplikacji, takich jak Java 
+Spring, Java Hibernate (inne).
+
+
  
