@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Baza komunikacji miejskiej</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<style>
+		body {
+			letter-spacing: 2px;
+			font-family: 'roboto';
+			margin-top: 100px;
+			background-color: white
+		}
+
+		.tabela {
+			border: 2px solid black;
+			transition: 0.5s;
+			margin-bottom: 200px;
+
+		}
+
+		.tabela:hover {
+			box-shadow: 10px 10px 20px brown;
+		}
+
+		th {
+			background-color: burlywood;
+			text-transform: uppercase;
+		}
+
+		.logout {
+			text-decoration: none;
+			border: 2px solid black;
+			padding: 10px 10px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			background-color: burlywood;
+			font-size: 12px;
+			color: white;
+			transition: 1s;
+			font-weight: bold;
+			position: absolute;
+			top: 30px;
+			right: 50px;
+		}
+
+		.logout:hover,
+		.back:hover {
+			background-color: rgb(30, 114, 30);
+			color: black;
+			box-shadow: 10px 5px gray;
+		}
+
+		.back {
+			text-decoration: none;
+			border: 2px solid black;
+			padding: 10px 10px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			background-color: burlywood;
+			font-size: 12px;
+			color: white;
+			transition: 1s;
+			font-weight: bold;
+
+
+		}
+
+		h1 {
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+
+		td {
+			border-right: 2px solid black;
+			text-align: center;
+		}
+
+		.wiersz {
+			transition: 0.2s;
+		}
+
+		.wiersz:hover {
+			background-color: rgb(223, 194, 156);
+		}
+
+		.last {
+			border-style: none;
+		}
+	</style>
+</head>
+
+<body>
+	<a class="logout" href="/logout">Wyloguj się</a>
+	<div align="center">
+		<h1>Przystanki</h1>
+
+		<!-- Table with records -->
+		<table class="tabela" cellpadding="10">
+			<a class="back" href="/userView">Powrót do menu</a> <br><br>
+			<!-- Table header -->
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nazwa</th>
+					<th>Szerokość geograficzna</th>
+					<th>Długość geograficzna</th>
+					<th>Na żądanie</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr class="wiersz" th:each="przystanek : ${listPrzystanek}">
+					<td th:text="${przystanek.ID_przystanku}">ID</td>
+					<td th:text="${przystanek.nazwa}">nazwa</td>
+					<td th:text="${przystanek.szerokosc_geograficzna}">szerokość geograficzna</td>
+					<td th:text="${przystanek.dlugosc_geograficzna}">długość geograficzna</td>
+					<td class="last" th:text="${przystanek.na_zadanie}">na żądanie</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+
+</html>

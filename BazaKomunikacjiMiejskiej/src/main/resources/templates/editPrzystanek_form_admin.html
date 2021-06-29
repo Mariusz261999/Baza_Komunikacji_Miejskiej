@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Edytowanie przystanku</title>
+	<link rel="stylesheet" th:href="@{css/styleNewForm.css}">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+	<style>
+		body {
+			background-color: white;
+			font-family: 'roboto';
+			background-color: rgb(235, 224, 206);
+
+		}
+
+		div {
+			margin-top: 100px;
+		}
+
+		tr {
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			background-color: burlywood;
+		}
+
+
+		h1 {
+			text-transform: uppercase;
+			font-size: 40px;
+			letter-spacing: 4px;
+		}
+
+		table {
+			padding-left: 65px;
+			border-style: none;
+			padding-right: 65px;
+			width: 800px;
+		}
+
+		form:hover {
+			box-shadow: 10px 10px 20px brown;
+		}
+
+		form {
+			padding-top: 20px;
+			background-color: burlywood;
+			border-style: none;
+			max-width: 800px;
+			transition: 0.5s;
+			border: 2px solid black;
+		}
+
+		button {
+			background-color: white;
+			border-style: none;
+			font-size: 20px;
+			text-transform: uppercase;
+			/* margin-left: -30px; */
+			margin-top: 50px;
+			padding: 10px 30px;
+			transition: 1s;
+			border: 1px solid black;
+			background-color: rgb(235, 224, 206);
+			margin-bottom: 10px;
+		}
+
+		button:hover,
+		a:hover {
+			background-color: rgb(23, 184, 23);
+			box-shadow: 10px 10px #2888;
+			cursor: pointer;
+		}
+
+		input {
+			margin-left: 80px;
+			width: 400px;
+			height: 20px;
+		}
+
+
+		select {
+			width: 410px;
+			height: 25px;
+			margin-left: 80px;
+		}
+
+		p {
+			color: red;
+			margin-top: 20px;
+		}
+
+		.trbutton {
+			padding: 20px 20px;
+			text-align: center;
+		}
+
+		.back {
+			text-align: center;
+			line-height: 40px;
+			position: absolute;
+			top: 20px;
+			border: 1px solid black;
+			right: 100px;
+			color: white;
+			background-color: burlywood;
+			height: 40px;
+			font-size: 18px;
+			width: 200px;
+			transition: 0.5s;
+			text-transform: uppercase;
+			text-decoration: none;
+		}
+
+		.ID_przystanku {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<a class="back" href="/przystankiAdmin">Powrót</a>
+	<div align="center">
+		<h1>Edytowanie przystanku</h1>
+
+
+		<!-- End line/ new line -->
+		<br />
+
+		<form action="#" th:action="@{/update}" th:object="${przystanek}" method="post">
+
+			<!-- Table with records -->
+			<table cellpadding="10">
+
+				<!-- First Row -->
+				<tr class="ID_przystanku">
+					<td>Id przystanku</td>
+					<td><input type="text" th:field="*{ID_przystanku}" readonly="readonly" autocomplete="off"
+							onfocus="funkcja(this)"></td>
+				</tr>
+
+				<tr>
+					<td>Nazwa przystanku</td>
+					<td><input class="nazwa" type="text" th:field="*{nazwa}" maxlength="40" autocomplete="off"
+							onfocus="funkcja(this)">
+					</td>
+				</tr>
+
+				<tr>
+					<td>Szerokość geograficzna</td>
+					<td><input class="szerokosc_geograficzna" type="text" maxlength="8"
+							th:field="*{szerokosc_geograficzna}" autocomplete="off" onfocus="funkcja(this)"></td>
+				</tr>
+
+				<tr>
+					<td>Długość geograficzna</td>
+					<td><input class="dlugosc_geograficzna" type="text" maxlength="8" th:field="*{dlugosc_geograficzna}"
+							autocomplete="off" onfocus="funkcja(this)"></td>
+				</tr>
+
+				<tr>
+					<td>Na żądanie</td>
+					<td><select class="na_zadanie" th:field="*{na_zadanie}" autocomplete="off" onfocus="funkcja(this)">
+							<option th:value="'T'" th:text="T"></option>
+							<option th:value="'N'" th:text="N"></option>
+						</select></td>
+				</tr>
+
+
+				<!-- Button -->
+				<tr class="trbutton">
+					<td colspan="2"><button type="submit">Zapisz</button></td>
+				</tr>
+
+			</table>
+		</form>
+		<p class="message"></p>
+		<script>
+			const p = document.querySelector(".message");
+			const funkcja = (e) => {
+				console.log(e)
+				if (e.className == "nazwa") {
+					p.textContent = "*Nazwa przystanku nie może być polem pustym, nie może mieć więcej niż 40 znaków"
+				} else if (e.className == "szerokosc_geograficzna") {
+					p.textContent = "*Pole powinno być zapisane w następujący sposób: XX.XXXXXX"
+				} else if (e.className == "dlugosc_geograficzna") {
+					p.textContent = "*Pole powinno być zapisane w następujący sposób: XX.XXXXXX"
+				} else if (e.className == "na_zadanie") {
+					p.textContent = "*T - na żądanie, N - nie na żądanie"
+				}
+			}
+			// input1.addEventListener("onfocusin", funkcja)
+		</script>
+	</div>
+</body>
+
+</html>

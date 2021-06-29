@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Baza komunikacji miejskiej</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<style>
+		body {
+			letter-spacing: 2px;
+			font-family: 'roboto';
+			margin-top: 100px;
+			background-color: white
+		}
+
+		.tabela {
+			border: 2px solid black;
+			transition: 0.5s;
+			margin-bottom: 200px;
+
+		}
+
+		.tabela:hover {
+			box-shadow: 10px 10px 20px brown;
+		}
+
+		th {
+			/* border: 2px solid black; */
+			background-color: burlywood;
+			text-transform: uppercase;
+		}
+
+		.button {
+			text-decoration: none;
+			border: 2px solid black;
+			padding: 10px 10px;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			background-color: burlywood;
+			font-size: 12px;
+			color: white;
+			transition: 1s;
+			font-weight: bold;
+			display: inline-block;
+			width: 200px;
+
+		}
+
+		.button:hover {
+			background-color: rgb(30, 114, 30);
+			color: black;
+			box-shadow: 10px 5px gray;
+		}
+
+		h1 {
+			text-transform: uppercase;
+			letter-spacing: 2px;
+		}
+
+		td {
+			border-right: 2px solid black;
+			text-align: center;
+		}
+
+		.option {
+			display: inline-block;
+			color: rgb(200, 158, 102);
+			border-style: none;
+			transition: 0.5s;
+			text-decoration: none;
+		}
+
+		.option:hover {
+			color: black;
+			cursor: pointer;
+			/* transform: rotate(360deg); */
+
+		}
+
+		.delete:hover {
+			color: red;
+		}
+
+		.wiersz {
+			transition: 0.2s;
+		}
+
+		.wiersz:hover {
+			background-color: rgb(223, 194, 156);
+		}
+
+		.logout {
+			position: absolute;
+			text-align: center;
+			top: 30px;
+			right: 50px;
+		}
+
+		.last {
+			border-style: none;
+		}
+	</style>
+</head>
+
+<body>
+	<a class="button logout" href="/logout">Wyloguj się</a>
+
+	<div align="center">
+		<h1>Ulgi</h1>
+
+		<!-- Adding new record (entry to new page) -->
+
+		<a class="button" href="/newUlga">Dodaj nowa ulge</a>
+		<a class="button" href="/adminView">Powrót do menu</a> <br /> <br />
+		<!-- Table with records -->
+		<table class="tabela" cellpadding="10">
+
+			<!-- Table header -->
+			<thead>
+				<tr>
+					<th>ID ulgi</th>
+					<th>Nazwa ulgi </th>
+					<th>Wysokość ulgi</th>
+					<th>Opis</th>
+					<th>Akcja</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr class="wiersz" th:each="ulga : ${listUlga}">
+					<td th:text="${ulga.id_ulgi}">ID</td>
+					<td th:text="${ulga.nazwa}">nazwa</td>
+					<td th:text="${ulga.wysokosc}">wysokosc</td>
+					<td th:text="${ulga.opis}">opis</td>
+					<td class="last"><a class="option" th:href="@{'/editUlga/' + ${ulga.id_ulgi}}"><i
+								class="fas fa-edit"></i></a>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<a class="option delete" th:href="@{'/deleteUlga/' + ${ulga.id_ulgi}}"><i
+								class="fas fa-trash"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+
+</html>
